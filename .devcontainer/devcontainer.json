@@ -1,16 +1,69 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
-  "features": {
-    "ghcr.io/devcontainers/features/dotnet:2": {},
-    "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.12"
-    },
-    "ghcr.io/devcontainers/features/node:1": {},
-    "ghcr.io/meaningful-ooo/devcontainer-features/homebrew:2": {},
-    "ghcr.io/duduribeiro/devcontainer-features/neovim:1": {},
-    "ghcr.io/devcontainers/features/powershell:1": {},
-    "ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {},
-    "ghcr.io/devcontainers-contrib/features/k6:1": {},
-    "ghcr.io/devcontainers-contrib/features/exa:1": {}
-  }
+	"name": "Ubuntu",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.isort",
+				"ms-python.vscode-pylance",
+				"ms-python.black-formatter",
+				"ms-python.autopep8",
+				"ms-python.mypy-type-checker",
+				"kaih2o.python-resource-monitor",
+				"donjayamanne.python-environment-manager",
+				"ms-dotnettools.csharp",
+				"ms-dotnettools.csdevkit",
+				"kishoreithadi.dotnet-core-essentials",
+				"ms-azuretools.vscode-docker",
+				"ms-dotnettools.blazorwasm-companion",
+				"ms-vscode-remote.remote-wsl",
+				"ms-vscode.live-server",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"ms-kubernetes-tools.kind-vscode",
+				"mindaro.mindaro",
+				"MS-CEINTL.vscode-language-pack-pt-BR",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"SonarSource.sonarlint-vscode",
+				"Catppuccin.catppuccin-vsc",
+				"thang-nm.catppuccin-perfect-icons",
+				"GitHub.copilot",
+				"GitHub.copilot-chat",
+				"christian-kohler.npm-intellisense",
+				"eg2.vscode-npm-script",
+				"aaron-bond.better-comments",
+				"jebbs.plantuml",
+				"redhat.vscode-yaml",
+				"redhat.vscode-extension-bpmn-editor",
+				"eamodio.gitlens",
+				"mhutchie.git-graph",
+				"yzhang.markdown-all-in-one",
+				"adrianwilczynski.blazor-snippet-pack",
+				"Dheovani.svg-viewer",
+				"Dart-Code.flutter",
+				"svipas.prettier-plus",
+				"nimbushq.otel-validator",
+				"mutantdino.resourcemonitor",
+				"Grafana.vscode-jsonnet",
+				"Grafana.grafana-alloy"
+			]
+		}
+	},
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {
+	// 	"ghcr.io/meaningful-ooo/devcontainer-features/homebrew:2": {}
+	// }
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+	// Configure tool-specific properties.
+	// "customizations": {},
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
 }
