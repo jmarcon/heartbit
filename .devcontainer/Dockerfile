@@ -41,12 +41,15 @@ RUN apt-get install -y \
   zsh zsh-syntax-highlighting \
   ack btop duf jq tldr zoxide \
   gh unzip curl wget wrk tmux \
-  fzf fd-find eza bat ripgrep \
+  fd-find eza bat ripgrep \
   file lua5.4 aptitude fortunes-br cowsay 
 
 RUN apt-get install -y \
   python3.11 python3-pip python3-venv python3-dev
 
+## Install fzf from git source | The package manager is not up to date
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.apps/.fzf
+RUN ~/.apps/.fzf/install --key-bindings --completion --no-update-rc  --no-bash --no-fish --bin
 
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
   apt-get install -y \
@@ -70,9 +73,6 @@ RUN chsh -s /usr/bin/zsh vscode
 RUN rm -rf /home/vscode/.oh-my-zsh
 
 USER vscode
-
-ARG TARGETPLATFORM
-ARG BUILDPLATFORM
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
 # # Install Homebrew
