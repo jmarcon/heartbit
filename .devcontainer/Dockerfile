@@ -88,12 +88,12 @@ WORKDIR /home/vscode/.apps
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$TARGETARCH/kubectl"
 
 WORKDIR /home/vscode
-RUN git clone https://github.com/jmarcon/dotfiles
-RUN ./dotfiles/Install/dotfiles.zsh 
-RUN ./dotfiles/Install/git_repos.zsh
+RUN git clone https://github.com/jmarcon/dotfiles ~/.apps/dotfiles
+RUN  ~/.apps/dotfiles/Install/dotfiles.zsh 
+RUN  ~/.apps/dotfiles/Install/git_repos.zsh
 
 ## Neovim Config
-RUN ln -s /home/vscode/dotfiles/Config/nvim/Config/ ~/.config/nvim 
-RUN ln -s /home/vscode/dotfiles/Config/nvim/.vimrc ~/.vimrc
+RUN ln -s /home/vscode/.apps/dotfiles/Config/nvim/Config/ ~/.config/nvim 
+RUN ln -s /home/vscode/.apps/dotfiles/Config/nvim/.vimrc ~/.vimrc
 
 ENTRYPOINT [ "zsh" ]
