@@ -4,6 +4,13 @@ ARG BUILDPLATFORM
 ARG TARGETPLATFORM
 ARG TARGETARCH
 ARG TARGETVARIANT
+ARG RANDOM=$RANDOM
+ENV container docker
+
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
+
+# Create a folder to put binary apps
+ENV PATH="/home/vscode/.apps:${PATH}"
 
 RUN wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc  | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
 RUN echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
@@ -17,7 +24,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
   apt-get install -y k6; \
   fi
 
-RUN apt-get update && apt-get upgrade -y
+RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y
 
 ## Installing the tools from the base image
 RUN apt-get install -y \
@@ -26,6 +33,7 @@ RUN apt-get install -y \
   lsb-release build-essential 
 
 RUN apt-get install -y software-properties-common
+
 RUN add-apt-repository ppa:deadsnakes/ppa -y ; \
   apt-get update;
 
@@ -38,6 +46,7 @@ RUN apt-get install -y \
   git git-delta git-extras git-flow
 
 RUN apt-get install -y \
+  snapd squashfuse fuse \
   zsh zsh-syntax-highlighting \
   ack btop duf jq tldr zoxide \
   gh unzip curl wget wrk tmux \
@@ -73,21 +82,28 @@ RUN chsh -s /usr/bin/zsh vscode
 RUN rm -rf /home/vscode/.oh-my-zsh
 
 USER vscode
-RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
+RUN mkdir -p /home/vscode/.apps
 
 # # Install Homebrew
 # RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# # Install Oh My Posh
-RUN mkdir -p /home/vscode/.apps
-ENV PATH="/home/vscode/.apps:${PATH}"
-RUN curl -s https://ohmyposh.dev/install.sh | bash -s -- -d /home/vscode/.apps
+# # # Putting the themes in the same place as the homebrew uses
+RUN curl -s https://ohmyposh.dev/install.sh | bash -s -- -d /home/vscode/.apps -t /home/vscode/.oh-my-posh/themes
+ENV POSH_THEMES_PATH="/home/vscode/.oh-my-posh/themes"
+ENV POSH_THEME="$POSH_THEMES_PATH/craver.omp.json"
+RUN oh-my-posh disable notice
+
+## Install Powershell
+# WORKDIR /tmp
+# RUN sudo snap update
+# RUN sudo snap install powershell --classic
 
 # Instal kubectl
 WORKDIR /home/vscode/.apps
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$TARGETARCH/kubectl"
 
 WORKDIR /home/vscode
+RUN echo ${RANDOM}
 RUN git clone https://github.com/jmarcon/dotfiles ~/.apps/dotfiles
 RUN  ~/.apps/dotfiles/Install/dotfiles.zsh 
 RUN  ~/.apps/dotfiles/Install/git_repos.zsh
