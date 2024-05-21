@@ -24,7 +24,7 @@ Heartbit is a simple and easy to use library for creating an opinionated and con
         - [ ] Using OpenTelemetry in Production
 - [ ] Exception Handling using Middleware
 - [ ] Configuration using Microsoft.Extensions.Configuration
-- [ ] Coding Conventions using EditorConfig
+- [x] Coding Conventions using EditorConfig
 - [ ] Code Analysis using SonarAnalyzer
 - [ ] Local Development using Docker Compose
 - [ ] CI/CD pipeline using Azure DevOps
